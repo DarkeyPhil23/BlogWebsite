@@ -15,6 +15,7 @@ import MainLayout from './layouts/MainLayout.jsx';
 import TagsPage from './pages/TagsPage.jsx';
 import CategoriesPage from './pages/CategoriesPage.jsx';
 import ProfileComponent from './components/NavBarComponents/ProfileComponent.jsx';
+import PostPage from './pages/PostPage.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
       <Route path="/categories" element={ <CategoriesPage/>}/>
       <Route path="/tags" element={<TagsPage/>}/>
       <Route path="/Profile/:id" element={<ProfileComponent/>}/>
+      <Route path="/Post/:id" element={<PostPage/>}/>
     </Route>
   )
 );
