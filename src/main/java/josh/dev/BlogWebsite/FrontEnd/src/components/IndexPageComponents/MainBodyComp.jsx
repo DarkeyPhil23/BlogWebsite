@@ -10,7 +10,8 @@ const MainBodyComp =( {post, id , title}) => {
             className='bg-white self-center w-11/12' readOnly  disabled
             value={post}
             ></textarea>
-            <button className=' self-end mr-12'> <Link to= {`/Post/${id}`}> Read More</Link></button>
+        <button className=' self-end mr-12'> <Link to= {`/Post/${id}`}> Read More</Link></button>
+
           </div>
   )
 }

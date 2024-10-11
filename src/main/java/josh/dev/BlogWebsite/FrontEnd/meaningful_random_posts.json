@@ -1,0 +1,20 @@
+[
+    {
+        "id": 101,
+        "title": "Breaking News: AI Revolution",
+        "content": "Artificial Intelligence is transforming industries worldwide. Companies are adopting AI at an unprecedented rate. Experts believe that this trend will continue for decades. AI has the potential to change how businesses operate, as well as how individuals interact with technology. Despite some concerns about job displacement, the opportunities AI presents are vast and exciting.",
+        "dateCreated": "2024-10-09T13:44:07.280402"
+    },
+    {
+        "id": 102,
+        "title": "The Future of Renewable Energy",
+        "content": "Renewable energy sources are growing rapidly as governments and companies seek to reduce carbon footprints. Wind and solar energy are leading the charge, with innovations driving down costs. Investment in infrastructure is also increasing, allowing more people to access clean energy. As these technologies improve, their adoption will continue to rise, making a sustainable future more achievable. The shift toward renewable energy is considered one of the key components in combating climate change.",
+        "dateCreated": "2024-10-09T13:44:07.280414"
+    },
+    {
+        "id": 103,
+        "title": "Exploring Space: The New Frontier",
+        "content": "Humanity has always been fascinated by the stars. Recent advancements in space exploration have reignited this interest. Private companies like SpaceX and Blue Origin are competing to make space travel more affordable. NASA continues to push the boundaries with missions to Mars and beyond. The next decade is expected to bring unprecedented exploration, as both nations and private enterprises invest in this new frontier. It's an exciting time for anyone interested in the cosmos.",
+        "dateCreated": "2024-10-09T13:44:07.280417"
+    }
+]
