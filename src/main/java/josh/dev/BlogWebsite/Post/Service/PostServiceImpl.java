@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,11 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class PostServiceImpl implements PostService{
 
+    private final PostRepository postRepo;
     @Autowired
-    private PostRepository postRepo;
-
-    @Autowired
-    private PostDtoMapper postDtoMapper;
+    public PostServiceImpl(PostRepository postRepo) {
+        this.postRepo = postRepo;
+    }
 
 
     @Override
@@ -41,24 +42,24 @@ public class PostServiceImpl implements PostService{
         }
         System.out.print("Date Created here: " + postDto.getDateCreated());
 
-       Post post = postDtoMapper.ConvertToEntity(postDto);
+       Post post = PostDtoMapper.ConvertToEntity(postDto);
        postRepo.save(post);
     }
 
     @Override
     public PostDto getPost( PostDto postDto) {
-        Optional<Post> findByTitle = Optional.ofNullable(postRepo.findByTitle(postDto.getTitle()));
+        Optional<Post> findByTitle = Optional.of(postRepo.findByTitle(postDto.getTitle()));
         Optional<Post> findByDesc = Optional.ofNullable(postRepo.findByContent(postDto.getContent()));
         PostDto post;
 
         if(findByTitle.isPresent() && findByDesc.isEmpty()){
-            post =  postDtoMapper.ConvertToDto(findByTitle.get());
+            post =  PostDtoMapper.ConvertToDto(findByTitle.get());
         }
         else if (findByTitle.isEmpty()&& findByDesc.isPresent()){
-            post =  postDtoMapper.ConvertToDto(findByDesc.get());
+            post =  PostDtoMapper.ConvertToDto(findByDesc.get());
         }
         else if(findByTitle.isPresent() && findByDesc.isPresent()){
-            post = postDtoMapper.ConvertToDto(findByTitle.get());
+            post = PostDtoMapper.ConvertToDto(findByTitle.get());
         }
         else{
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
@@ -70,7 +71,7 @@ public class PostServiceImpl implements PostService{
     public PostDto getPost(Long id) {
         Optional<Post> post = postRepo.findById(id);
         if(post.isPresent()){
-            return postDtoMapper.ConvertToDto(post.get());
+            return PostDtoMapper.ConvertToDto(post.get());
         }
         else {
             throw new EntityNotFoundException("Id not found");
@@ -80,10 +81,14 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Page<Post> getAllPosts(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo,pageSize);
-        Page<Post> posts = postRepo.findAll(pageable);
-        return posts;
+        Pageable pageable = PageRequest.of(pageNo,pageSize, Sort.Direction.DESC,"dateCreated");
+        return postRepo.findAll(pageable);
     }
+
+//    @Override
+//    public List<PostDto> getIndexPosts() {
+//        return postRepo.findAll().stream().map(PostDtoMapper::ConvertToDto).toList();
+//    }
 
     @Override
     public void updatePost(PostDto postDto) {
@@ -91,7 +96,7 @@ public class PostServiceImpl implements PostService{
         Optional<Post> findByDesc = Optional.ofNullable(postRepo.findByContent(postDto.getContent()));
 
         if(findByTitle.isPresent() || findByDesc.isPresent()){
-            postRepo.save(postDtoMapper.ConvertToEntity(postDto)) ;
+            postRepo.save(PostDtoMapper.ConvertToEntity(postDto)) ;
         }
         else{
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
@@ -116,7 +121,7 @@ public class PostServiceImpl implements PostService{
         Optional<Post> findByDesc = Optional.ofNullable(postRepo.findByContent(postDto.getContent()));
 
         if(findByTitle.isPresent() && findByDesc.isPresent()){
-            postRepo.delete(postDtoMapper.ConvertToEntity(postDto)); ;
+            postRepo.delete(PostDtoMapper.ConvertToEntity(postDto)); ;
         }
 
     }

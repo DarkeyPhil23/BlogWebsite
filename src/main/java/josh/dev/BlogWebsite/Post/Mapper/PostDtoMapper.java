@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class PostDtoMapper {
-    public PostDto ConvertToDto(Post post){
+    public static PostDto  ConvertToDto(Post post){
         // Add conversion of date time
-        return new PostDto(post.getTitle(), post.getContent(), post.getDateCreated());
+        return PostDto.builder().title(post.getTitle()).content(post.getContent()).DateCreated(post.getDateCreated()).build();
     }
-    public Post ConvertToEntity(PostDto postDto){
+    public static Post ConvertToEntity(PostDto postDto){
         // TODO: add conversion to date time
         return Post.builder()
                 .title(postDto.getTitle())

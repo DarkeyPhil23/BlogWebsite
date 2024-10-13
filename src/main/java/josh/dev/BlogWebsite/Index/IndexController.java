@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,10 +18,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "http://localhost:3000")
 public class IndexController {
     private  PostServiceImpl postService;
 
-    public IndexController(PostServiceImpl postService) {
+    @Autowired
+    public IndexController(PostServiceImpl postService ) {
         this.postService = postService;
     }
 
@@ -28,7 +31,8 @@ public class IndexController {
     @GetMapping("")
     public ResponseEntity<Page<Post>> load(@RequestParam(defaultValue = "0")int pageNo, @RequestParam(defaultValue = "10")
     int pageSize ){
-        return new ResponseEntity<>(postService.getAllPosts(1,10), HttpStatusCode.valueOf(200));
+        return new ResponseEntity<>(postService.getAllPosts(pageNo,pageSize), HttpStatusCode.valueOf(200));
     }
+
 
 }

@@ -4,6 +4,8 @@ import josh.dev.BlogWebsite.Post.Dto.PostDto;
 import josh.dev.BlogWebsite.Post.Model.Post;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 
 public interface PostService {
     // POST method
@@ -15,6 +17,7 @@ public interface PostService {
 
     // Get List
     Page<Post> getAllPosts(int pageNo, int pageSize);
+//    List<PostDto> getIndexPosts();
 
     // UPDATE METHOD
     void updatePost(PostDto postDto);
