@@ -1,10 +1,7 @@
-package josh.dev.BlogWebsite.Post.Service;
+package josh.dev.BlogWebsite.Post;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,15 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.persistence.EntityNotFoundException;
-import josh.dev.BlogWebsite.Post.Dto.PostDto;
-import josh.dev.BlogWebsite.Post.Mapper.PostDtoMapper;
-import josh.dev.BlogWebsite.Post.Model.Post;
-import josh.dev.BlogWebsite.Post.Repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepo;
     @Autowired

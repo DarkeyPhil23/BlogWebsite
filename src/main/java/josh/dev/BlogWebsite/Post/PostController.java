@@ -1,8 +1,6 @@
-package josh.dev.BlogWebsite.Post.Controllers;
+package josh.dev.BlogWebsite.Post;
 
 
-import josh.dev.BlogWebsite.Post.Dto.PostDto;
-import josh.dev.BlogWebsite.Post.Service.PostServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +14,7 @@ public class PostController {
     @Autowired
     private PostServiceImpl postService;
 
-    @PostMapping("/create")
+    @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     private void createPost(@RequestBody PostDto postDto){
         postService.CreatePost(postDto);

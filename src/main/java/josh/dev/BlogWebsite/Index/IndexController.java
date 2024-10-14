@@ -1,9 +1,8 @@
 package josh.dev.BlogWebsite.Index;
 
 
-import josh.dev.BlogWebsite.Post.Dto.PostDto;
-import josh.dev.BlogWebsite.Post.Model.Post;
-import josh.dev.BlogWebsite.Post.Service.PostServiceImpl;
+import josh.dev.BlogWebsite.Post.Post;
+import josh.dev.BlogWebsite.Post.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatusCode;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/")

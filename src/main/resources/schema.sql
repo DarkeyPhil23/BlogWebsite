@@ -1,6 +1,0 @@
-CREATE TABLE IF NOT EXISTS Posts (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    content CLOB,
-    date_created TIMESTAMP
-);

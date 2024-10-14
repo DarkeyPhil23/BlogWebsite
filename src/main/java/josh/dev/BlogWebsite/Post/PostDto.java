@@ -1,4 +1,4 @@
-package josh.dev.BlogWebsite.Post.Dto;
+package josh.dev.BlogWebsite.Post;
 
 import lombok.*;
 

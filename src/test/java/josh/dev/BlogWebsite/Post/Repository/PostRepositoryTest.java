@@ -1,6 +1,7 @@
 package josh.dev.BlogWebsite.Post.Repository;
 
-import josh.dev.BlogWebsite.Post.Model.Post;
+import josh.dev.BlogWebsite.Post.Post;
+import josh.dev.BlogWebsite.Post.PostRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class PostRepositoryTest {

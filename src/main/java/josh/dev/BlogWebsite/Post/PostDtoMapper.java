@@ -1,7 +1,5 @@
-package josh.dev.BlogWebsite.Post.Mapper;
+package josh.dev.BlogWebsite.Post;
 
-import josh.dev.BlogWebsite.Post.Dto.PostDto;
-import josh.dev.BlogWebsite.Post.Model.Post;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +8,11 @@ import org.springframework.stereotype.Component;
 public class PostDtoMapper {
     public static PostDto  ConvertToDto(Post post){
         // Add conversion of date time
-        return PostDto.builder().title(post.getTitle()).content(post.getContent()).DateCreated(post.getDateCreated()).build();
+        return PostDto.builder()
+                .title(post.getTitle())
+                .content(post.getContent())
+                .DateCreated(post.getDateCreated())
+                .build();
     }
     public static Post ConvertToEntity(PostDto postDto){
         // TODO: add conversion to date time
