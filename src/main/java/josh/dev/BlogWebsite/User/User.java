@@ -2,6 +2,7 @@ package josh.dev.BlogWebsite.User;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import josh.dev.BlogWebsite.Post.Post;
 import lombok.AllArgsConstructor;
@@ -37,9 +38,11 @@ public class User {
             nullable = false
     )
     @NotNull
+    @NotBlank(message =  "Password must not be blank")
     private String password;
 
-
+    @Email(message = "Invalid Email")
+    @NotBlank(message = "Email cannot be blank")
     private String email;
 
     @OneToMany(mappedBy = "user")

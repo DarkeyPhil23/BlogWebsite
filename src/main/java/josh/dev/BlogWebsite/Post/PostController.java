@@ -7,14 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/api/posts")
 @Slf4j
 @CrossOrigin(origins = "http://localhost:3000")
 public class PostController {
     @Autowired
     private PostServiceImpl postService;
 
-    @PostMapping("/")
+    @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     private void createPost(@RequestBody PostDto postDto){
         postService.CreatePost(postDto);
