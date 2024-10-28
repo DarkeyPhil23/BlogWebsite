@@ -6,8 +6,8 @@ public interface UserService {
     // POST method
     User signUp(User user);
 
-    // Get Method
-    User loginUser(User user);
+    // login Method
+    String verify(User user);
 
     // Get List
     List<User> getAllUsers();
