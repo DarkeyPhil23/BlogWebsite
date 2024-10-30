@@ -13,7 +13,7 @@ public interface UserService {
     List<User> getAllUsers();
 
     // UPDATE METHOD
-    void updateUser(User user);
+    void updateUser(User user, Long id);
 
     //DELETE METHOD
     void deleteUser( User user);

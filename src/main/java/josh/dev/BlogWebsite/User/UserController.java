@@ -18,7 +18,7 @@ public class UserController {
     public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
-
+    //fine
     @GetMapping("")
     ResponseEntity getUsers (){
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatusCode.valueOf(200));
@@ -31,30 +31,38 @@ public class UserController {
 
         userService.signUp(user);
     }
-
-    // TODO: Test this:
+// fine
     @PostMapping("/login")
-    @ResponseStatus(HttpStatus.CREATED)
-    private void login(@RequestBody User user){
+    private ResponseEntity login(@RequestBody User user){
 
-        if( userService.verify(user).equals("Success")) {
-
+        if(!userService.verify(user).equalsIgnoreCase("Success")) {
+            System.out.println(userService.verify(user));
+           throw new UserNotAuthenticatedException();
         };
+
+        return new ResponseEntity("User authenticated!" , HttpStatusCode.valueOf(200));
     }
 
-
-    // TODO : Also test this
-    @PutMapping("")
-    @ResponseStatus(HttpStatus.CREATED)
-    private void updateUser(@RequestBody User user){
-
-        userService.updateUser(user);
+    // fine
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    private void updateUser(@RequestBody User user, @PathVariable Long id){
+        System.out.println(user);
+        System.out.println("id here:" + id);
+        userService.updateUser(user,id);
+    }
+    @ExceptionHandler({UserNotAuthenticatedException.class})
+    public ResponseEntity handleBadCrdentialsAuth(){
+        return new ResponseEntity("Invalid Username/Password.",HttpStatusCode.valueOf(403));
     }
 
-
-    @ExceptionHandler({UserFoundException.class, SQLIntegrityConstraintViolationException.class})
+    @ExceptionHandler({UserFoundException.class})
     public ResponseEntity handleUserFoundException(){
-        return new ResponseEntity("Invalid Account. Please try another credentials",HttpStatusCode.valueOf(401));
+        return new ResponseEntity("Username already exists please choose another one.",HttpStatusCode.valueOf(401));
+    }
+    @ExceptionHandler({ SQLIntegrityConstraintViolationException.class})
+    public ResponseEntity handleSQLConstraint(){
+        return new ResponseEntity("You are trying to register an existing user. ",HttpStatusCode.valueOf(401));
     }
     @ExceptionHandler({UsernameNotFoundException.class})
     public ResponseEntity handleUsernameNotFoundException(){

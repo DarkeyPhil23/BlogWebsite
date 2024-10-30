@@ -18,11 +18,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepo;
     private final BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
     private final AuthenticationManager authmanager;
+    private final JWTService jwtService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepo, AuthenticationManager authmanager) {
+    public UserServiceImpl(UserRepository userRepo, AuthenticationManager authmanager, JWTService jwtService) {
         this.userRepo = userRepo;
         this.authmanager = authmanager;
+        this.jwtService = jwtService;
     }
 
 
@@ -47,7 +49,7 @@ public class UserServiceImpl implements UserService {
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 
         if(authentication.isAuthenticated()){
-            return  "success";
+            return jwtService.generateToken();
         }
         return "fail";
     }
@@ -59,15 +61,23 @@ public class UserServiceImpl implements UserService {
 
     // Handle updates to user
     // Gotta make sure we only call via Username
+    // Gotta implement DTO pattern here to avoid
     @Override
-    public void updateUser(User user) throws UsernameNotFoundException {
-        Optional<User> userFound = Optional.of(userRepo.findByusername(user.getUsername()));
+    public void updateUser(User user, Long id) throws UsernameNotFoundException {
+        Optional<User> userFound = Optional.ofNullable(userRepo.getReferenceById(id));
+    System.out.println(userFound);
 
-        if (userFound.isEmpty()){
-            throw new UsernameNotFoundException("Username doesn't exist");
-        }
-    user.setPassword(bcrypt.encode(user.getPassword()));
-    userRepo.save(user);
+            // Update fields as necessary; skip username if it’s meant to stay the same
+            if(userFound.isPresent()){
+                // TODO: Add existing username check to update username if it's not taken
+                User existinguser = userFound.get();
+                existinguser.setPassword(bcrypt.encode(user.getPassword()));
+                existinguser.setEmail(user.getEmail());
+                userRepo.save(existinguser);
+            }else{
+                throw new UsernameNotFoundException("User doesn't exist");
+            }
+
 
     }
 
