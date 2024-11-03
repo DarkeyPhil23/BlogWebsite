@@ -5,7 +5,7 @@ const HomeComp = () => {
   return (
 
     <div className="flex w-24 bg-red-400 items-center justify-center  ">
-    <li className='flex-none '><Link to = {"/"}> Home</Link></li>
+    <li className='flex-none '><Link to = {"home"}> Home</Link></li>
     </div>
   )
 }

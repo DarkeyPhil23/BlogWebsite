@@ -34,13 +34,13 @@ public class UserController {
 // fine
     @PostMapping("/login")
     private ResponseEntity login(@RequestBody User user){
-
-        if(!userService.verify(user).equalsIgnoreCase("Success")) {
-            System.out.println(userService.verify(user));
+        String token = userService.verify(user);
+        if(userService.verify(user).equalsIgnoreCase("fail")) {
+            System.out.println( "Inside: " + userService.verify(user));
            throw new UserNotAuthenticatedException();
         };
-
-        return new ResponseEntity("User authenticated!" , HttpStatusCode.valueOf(200));
+        System.out.println("Outside: " + token);
+        return new ResponseEntity(token , HttpStatusCode.valueOf(200));
     }
 
     // fine

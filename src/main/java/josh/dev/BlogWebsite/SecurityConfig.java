@@ -13,22 +13,22 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     private final UserDetailsServiceImpl userDetails;
-
-    public SecurityConfig(UserDetailsServiceImpl userDetails) {
-        this.userDetails = userDetails;
-    }
+    private final JWtFilter jWtFilter;
 
     @Autowired
+    public SecurityConfig(UserDetailsServiceImpl userDetails, JWtFilter jWtFilter) {
+        this.userDetails = userDetails;
+        this.jWtFilter = jWtFilter;
+    }
+
 @Bean
 SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
     return
@@ -38,7 +38,9 @@ SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
                     .permitAll()
                     .anyRequest().authenticated())
             .httpBasic(Customizer.withDefaults()).
-            sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
+            sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .addFilterBefore(jWtFilter, UsernamePasswordAuthenticationFilter.class)
+            .build();
 
     }
 
