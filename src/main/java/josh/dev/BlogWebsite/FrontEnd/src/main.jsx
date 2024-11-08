@@ -24,11 +24,12 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage.jsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
+    // TODO: ADD protected routes
       {/* Root route */}
       <Route path="/" element={<LoginPage />} />
       <Route path="forgotpass" element={<ForgotPasswordPage />} />
      
-
+      // DASHBOARD is not rendered rpoperly, change the theme to blue themed simple colors
       {/* Dashboard route with nested routes */}
       <Route path="/dashboard" errorElement={<ErrorPage />} element={<MainLayout />}>
         <Route path="home" element={<IndexPage />} /> {/* Default index route for /dashboard */}

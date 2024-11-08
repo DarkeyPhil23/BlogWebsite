@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     private final UserServiceImpl userService;
@@ -24,7 +24,7 @@ public class UserController {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatusCode.valueOf(200));
     }
 
-    // TODO: Test this
+    // fine
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     private void register(@RequestBody User user){

@@ -16,6 +16,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -33,6 +35,7 @@ public class SecurityConfig {
 SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
     return
     http.csrf(customizer -> customizer.disable()).
+
             authorizeHttpRequests(request -> request
                     .requestMatchers("user/register" , "user/login")
                     .permitAll()
@@ -43,6 +46,21 @@ SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
             .build();
 
     }
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/post")
+                        .allowedOrigins("http://localhost:3000");
+                registry.addMapping("/api/user")
+                        .allowedOrigins("http://localhost:3000");
+                registry.addMapping("/index")
+                        .allowedOrigins("http://localhost:3000");
+            }
+        };
+    }
+
 
 @Bean
 public AuthenticationProvider authenticationProvider(){
