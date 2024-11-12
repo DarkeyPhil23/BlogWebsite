@@ -19,6 +19,7 @@ import ProfileComponent from './components/NavBarComponents/ProfileComponent.jsx
 import PostPage from './pages/PostPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import ForgotPasswordPage from './pages/ForgotPasswordPage.jsx';
+import RegisterPage from './pages/RegisterPage.jsx';
 
 
 const router = createBrowserRouter(
@@ -28,6 +29,8 @@ const router = createBrowserRouter(
       {/* Root route */}
       <Route path="/" element={<LoginPage />} />
       <Route path="forgotpass" element={<ForgotPasswordPage />} />
+      <Route path="register" element={<RegisterPage />} />
+
      
       // DASHBOARD is not rendered rpoperly, change the theme to blue themed simple colors
       {/* Dashboard route with nested routes */}

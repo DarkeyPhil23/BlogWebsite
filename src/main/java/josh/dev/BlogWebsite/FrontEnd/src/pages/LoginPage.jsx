@@ -1,5 +1,5 @@
 import { Link, redirect, useNavigate } from 'react-router-dom'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {useForm} from 'react-hook-form'
 import {z} from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,37 +17,39 @@ const schema = z.object({
 
 });
 
-
 function LoginPage() {
   const navigate = useNavigate();
   const {register, handleSubmit, 
     setError,
     formState:{errors, isSubmitting}, reset} = useForm(
       {
-
         resolver: zodResolver(schema),
       }
     
   );
 
-
-  const [visible,setVisible] = useState(false)
+  const [visible,setVisible] = useState(false);
+  const [remember,setRemember]= useState(false);
   
 
+useEffect(() => {
+  // add To input values when remember is true
+  
+}, [])
 
-  const handlePassVisible = () =>{
-    setVisible(!visible);
-  }
+ 
 
   const  onSubmit = async (data) => { 
-      // handle axios call to get 
+      // handle axios call to get our user data from our backend
       // Use the isSubmitting boolean to handle async function
     try {
       await new Promise((resolve) => setTimeout(resolve,2000))
-      
+      // add data to localStorage 
+
       console.log(data)
       navigate("/dashboard");
     } catch (error) {
+
       reset()
       setError("root", {
 
@@ -56,6 +58,17 @@ function LoginPage() {
     }
   
   }
+
+  const handleChange = (e) =>{
+     setRemember( e.target.checked)
+  }
+  useEffect(() => {
+    console.log("remember: ", remember);
+    
+  }, [remember])
+  
+
+  
    
   return (
     <>
@@ -76,7 +89,7 @@ function LoginPage() {
           {errors.username && <div className="text-red-500">{errors.username.message}</div>}
           </div>
 
-          <div>
+          <div className='relative'>
             <label className="block mb-1 text-sm font-medium text-gray-600" htmlFor="password">
               Password
             </label>
@@ -86,9 +99,11 @@ function LoginPage() {
             {...register("password")}
             placeholder='password '
             />
-          <img src={visible? visibleeye: notvisible} alt="" className='absolute h-5 w-5 right-[37rem] top-[20.5rem]' onClick={handlePassVisible} />
+          <img src={visible? visibleeye: notvisible} alt="" className='absolute h-6 w-6 right-[1.5rem] top-[2.1rem] ' 
+          onClick={() => setVisible((prevState) => !prevState)} />
           </div>
           {errors.password && (<div className="text-red-500">{errors.password.message}</div>)}
+
         <button type='submit'
             className="w-full px-4 py-2 text-white bg-indigo-500 rounded-lg hover:bg-indigo-600 focus:outline-none"
           disabled= {isSubmitting}
@@ -99,12 +114,12 @@ function LoginPage() {
         <button
             className="w-full px-4 py-2 text-white bg-indigo-500 rounded-lg hover:bg-indigo-600 focus:outline-none"
           >
-            Register
+                       <Link to={"register"}>Register a new account</Link>
           </button>
         <div className='flex flex-row gap-2'>
-            <input type="checkbox" name="remember"   />
-            <p className='grow'>Remember Me</p>
-            <Link to={"forgotpass"}>forgot password?</Link>
+            <input type="checkbox" name="remember"  onChange={handleChange}  />
+            <p className='grow' >Remember Me</p>
+            <Link to={"forgotpass"} >forgot password?</Link>
         </div>
         {errors.root && <div className="text-red-500">{errors.root.message}</div>}
       </div>
